@@ -3,7 +3,7 @@ const urlRoute = require('./routes/url');
 const { connectToMongoDB } = require("./connect");
 const URL = require('./models/url');
 const staticRoute = require('./routes/staticRouter'); 
-
+const userRoute = require('./routes/user');
 const path = require('path');
 const app = express();
 const PORT =  8001;
@@ -28,6 +28,7 @@ app.get("/test", async (req, res) => {
 
 app.use("/url", urlRoute);
 app.use("/", staticRoute);
+app.use("/user", userRoute);
 
 app.get('/:shortId', async (req, res) => {
     const shortId = req.params.shortId;
