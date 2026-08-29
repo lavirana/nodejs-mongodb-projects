@@ -1,7 +1,9 @@
 const path = require("path");
 const express = require('express');
 const mongoose = require("mongoose");
-
+const cookiePaser = require('cookie-parser');
+const { checkForAuthenticationCookie } = require('./middlewares/authentication');
+ 
 const app = express();
 
 
@@ -15,10 +17,15 @@ app.set('view engine', 'ejs')
 app.set("views",path.resolve("./views"));
 
 app.use(express.urlencoded({extended: false}));
+app.use(cookiePaser());
+app.use(checkForAuthenticationCookie('token'));
 
 
-app.get('/', (req, res) => {
-    res.render('home');
+app.get("/", (req, res) => {
+    res.render("home", {
+        user: req.user,
+    });
+   
 });
 
 app.use('/user', userRoute);
