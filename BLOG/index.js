@@ -5,6 +5,7 @@ const cookiePaser = require('cookie-parser');
 const { checkForAuthenticationCookie } = require('./middlewares/authentication');
 const app = express();
 const userRoute = require('./routes/user');
+const blogRoute = require('./routes/blog');
 const PORT = 8000;
 
 mongoose.connect('mongodb://localhost:27017/blogu').then(e => console.log('MongoDB Connected'));
@@ -23,4 +24,6 @@ app.get("/", (req, res) => {
 });
 
 app.use('/user', userRoute);
+app.use('/blog', blogRoute);
+
 app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));
