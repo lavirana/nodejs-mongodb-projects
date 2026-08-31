@@ -1,6 +1,21 @@
 const  { Router } = require("express");
 const router = Router();
+const multer = require('multer');
+const crypto = require('crypto')
+const path = require('path');
 
+const Blog = require('../models/blog');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, `./public/uploads/`)
+    },
+    filename: function (req, file, cb) {
+        const filename = `${Date.now()}-${file.originalname}`;
+        cb(null, filename);
+    },
+  });
+  const upload = multer({ storage: storage })
 
 router.get('/add-new', (req, res) => {
     return res.render('addBlog', {
@@ -9,9 +24,15 @@ router.get('/add-new', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
-    console.log(req.body);
-    return res.redirect("/");
+router.post('/', upload.single('coverImage'), async (req, res) => {
+    const {title, body} = req.body
+    const blog = await Blog.create({
+        body,
+        title,
+        createdBy: req.user_id,
+        coverImageURL: `/uploads/${req.file.filename}`
+    })
+    return res.redirect(`/blog/${blog._id}`);
 });
 
 module.exports = router;
