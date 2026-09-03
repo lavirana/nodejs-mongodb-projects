@@ -1,0 +1,18 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "chat-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashish Rana",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1"
+  }
+}
