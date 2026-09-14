@@ -13,9 +13,11 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+const userRoutes = require('./routes/userRoutes');
 
+//use the routers
+app.use('./user',userRoutes);
 
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

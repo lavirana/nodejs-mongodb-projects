@@ -47,5 +47,35 @@ const userSchema = new mongoose.Schema({
    },
 });
 
+userSchema.pre('save', async function(next) {
+    const person = this;
+
+    //hash the password only if it has been modified
+    if(!user.isModified('password')) return next();
+
+    try{
+        //hash password generation
+        const salt = await bcrypt.genSalt(10);
+
+        //hash passord
+        const hashedPassword = await bcyrypt.hash(user.password, salt);
+
+        //Override the plain password with hashed one
+        user.password = hashedPassword;
+        next();
+    }catch(err){
+        return next(err);
+    }
+})
+
+userSchema.methods.comparePassword = async function(userPassword){
+    try{
+        const isMatch = await bcrypt.compare(userPassword, this.password);
+        return isMatch;
+    }catch(err){
+        throw err;
+    }
+}
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;
