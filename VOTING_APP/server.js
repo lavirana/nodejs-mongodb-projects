@@ -7,15 +7,13 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
-const {jwtAuthMiddleware} = require('./jwt');
-
 //Import the routes file
 const userRoutes = require('./routes/userRoutes');
 const candidateRoutes = require('./routes/candidateRoutes');
 
 //use the routers
 app.use('/user',userRoutes);
-app.use('/candidate', jwtAuthMiddleware, candidateRoutes);
+app.use('/candidate', candidateRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
