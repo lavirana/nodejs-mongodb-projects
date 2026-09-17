@@ -26,13 +26,13 @@ router.post('/signup', async (req, res) => {
         res.status(200).json({response: response, token: token});
     }catch(err){
         console.log(err);
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({error: 'Internal Server Error - User Not Created'});
     }
 });
 
 
 //Login Route
-router.post('./login', async(req, res) => {
+router.post('/login', async(req, res) => {
     try{
         //Extract username and password from request body
         const {aadharCardNumber, password} = req.body;
@@ -93,7 +93,7 @@ router.put('/profile/password', jwtAuthMiddleware, async (req, res) => {
         //update the user's password
         user.password = newPassword;
         await user.save();
-        
+
         res.status(200).json({message: "Password updated"});
     }catch(err){
         res.status(500).json({error: 'Internal Server Error'});
