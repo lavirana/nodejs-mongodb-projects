@@ -54,7 +54,7 @@ if(user && (await bcrypt.compare(password, user.password))){
             email: user.email,
             id: user.id,
         },
-    }, process.env.ACCESS_TOKEN_SECERT,
+    }, process.env.ACCESS_TOKEN_SECRET,
     {expiresIn: "1m"}
 );
     res.status(200).json({ accessToken });
@@ -68,7 +68,7 @@ if(user && (await bcrypt.compare(password, user.password))){
 //@route POST /api/user/current
 //@access private
 const currentUser = asyncHandler(async (req, res) => {
-    res.json({message: "Current user Information"});
+    res.json(req.user);
 });
 
 module.exports = {registerUser, loginUser, currentUser};
