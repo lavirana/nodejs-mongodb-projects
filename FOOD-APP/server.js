@@ -19,6 +19,9 @@ dotenv.config();
 
 //route
 //http://localhost:8000
+app.use('/api/v1/test', require('./routes/testRoutes'));
+
+
 app.get('/', (req, res) => {
     return res.status(200).send("<h2>Welcome to Food Server</h2>");
 });
