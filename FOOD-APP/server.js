@@ -24,6 +24,7 @@ connectDb();
 //route
 //http://localhost:8000
 app.use('/api/v1/test', require('./routes/testRoutes'));
+app.use('/api/v1/auth', require('./routes/authRoutes'));
 
 
 app.get('/', (req, res) => {
