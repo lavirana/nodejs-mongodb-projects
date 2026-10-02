@@ -34,5 +34,74 @@ const registerController = async (req, res) => {
     }
 }
 
+//LOGIN || POST
+const loginController = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error In Login API',
+            error
+        })
+    }
+}
 
-module.exports = { registerController };
+//LOGOUT || POST
+const logoutController = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error In Logout API',
+            error
+        })
+    }
+}
+
+//GET USER || GET   
+const getUserController = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error In Get User API',
+            error
+        })
+    }
+}
+
+//UPDATE USER || PUT
+const updateUserController = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error In Update User API',
+            error
+        })
+    }
+}
+
+//DELETE USER || DELETE
+const deleteUserController = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error In Delete User API',
+            error
+        })
+    }
+}
+
+module.exports = { registerController, loginController, logoutController, getUserController, updateUserController, deleteUserController };
