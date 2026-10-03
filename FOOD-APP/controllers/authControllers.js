@@ -38,6 +38,36 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
     try{
         const {email, password} = req.body;
+        //validation
+        if(!email || !password){
+            return res.status(500).send({
+                success:false,
+                message: 'Please Provide All Fields'
+            })
+        }
+        //check user
+        const user = await userModel.findOne({email})
+        if(!user){
+            return res.status(500).send({
+                success:false,
+                message: 'User Not Found'
+            })
+        }
+        //compare password
+       /* const isMatch = await bcrypt.compare(password, user.password)
+        if(!isMatch){
+            return res.status(500).send({
+                success:false,
+                message: 'Invalid Password'
+            })
+        }*/
+        //create token
+        //const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'})
+        res.status(200).send({
+            success:true,
+            message:"Successfully Logged In",
+            //token
+        })
     }catch(error){
         console.log(error)
         res.status(500).send({
