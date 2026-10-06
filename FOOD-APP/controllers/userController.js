@@ -1,0 +1,48 @@
+const User = require("../models/userModel")
+
+//GET ALL USERS || GET
+const getAllUsersController = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+//GET USER BY ID || GET
+const getUserByIdController = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User Not Found' });
+        }
+
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+//UPDATE USER || PUT
+const updateUserController = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+//DELETE USER || DELETE
+const deleteUserController = async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { getAllUsersController, getUserByIdController, updateUserController, deleteUserController };
