@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel")
-
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 const registerController = async (req, res) => {
     try{
     const {userName, email, password,phone,address} = req.body;
@@ -16,13 +17,23 @@ const registerController = async (req, res) => {
         return res.status(500).send({
             success:false,
             message: 'Email Already Registered Please Login'
-        })
+        });
     }
+    //hash password
+    var salt = bcrypt.genSaltSync(10);
+    var hashedPassword = await bcrypt.hash(password, salt);
+
     //create new user
-    const user = await userModel.create({userName, email,password,address,phone})
+    const user = await userModel.create({
+        userName,
+         email,
+         password: hashedPassword,
+         address,
+         phone})
     res.status(201).send({
         success:true,
         message:"Successfully Registered",
+        user
     })
     }catch(error){
         console.log(error)
@@ -54,19 +65,27 @@ const loginController = async (req, res) => {
             })
         }
         //compare password
-       /* const isMatch = await bcrypt.compare(password, user.password)
+        const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch){
             return res.status(500).send({
                 success:false,
                 message: 'Invalid Password'
             })
-        }*/
+        }
         //create token
-        //const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1d'})
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'})
         res.status(200).send({
             success:true,
             message:"Successfully Logged In",
-            //token
+            user:{
+                _id: user._id,
+                userName: user.userName,
+                email: user.email,
+                phone: user.phone,
+                address: user.address,
+                password: user.password
+            },
+            token
         })
     }catch(error){
         console.log(error)
