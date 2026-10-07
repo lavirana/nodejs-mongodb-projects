@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const registerController = async (req, res) => {
     try{
-    const {userName, email, password,phone,address} = req.body;
+    const {userName, email, password,phone,address, answer} = req.body;
     //validation
-    if(!userName || !email || !password || !address || !phone){
+    if(!userName || !email || !password || !address || !phone || !answer){
         return res.status(500).send({
             success:false,
             message: 'Please Provide All Fields'
@@ -29,7 +29,8 @@ const registerController = async (req, res) => {
          email,
          password: hashedPassword,
          address,
-         phone})
+         phone,
+        answer})
     res.status(201).send({
         success:true,
         message:"Successfully Registered",
@@ -153,4 +154,23 @@ const deleteUserController = async (req, res) => {
     }
 }
 
-module.exports = { registerController, loginController, logoutController, getUserController, updateUserController, deleteUserController };
+const resetPasswordController = async (req, res) => {
+    try{
+        const {email,password,answer} = req.body;
+        if(!email || !password || !answer){
+            return res.status(500).send({
+                success:false,
+                message:'Please provide all Fields'
+            })
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message:'error in PASSWORD RESET API',
+            error
+        })
+    }
+}
+
+module.exports = { registerController, loginController, logoutController, getUserController, updateUserController, deleteUserController, resetPasswordController };
