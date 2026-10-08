@@ -1,4 +1,5 @@
 const User = require("../models/userModel")
+const bcrypt = require('bcryptjs');   // or require('bcrypt'), whichever you installed
 
 //GET ALL USERS || GET
 const getAllUsersController = async (req, res) => {
@@ -63,6 +64,41 @@ const deleteUserController = async (req, res) => {
     }
 }
 
+const resetPasswordController = async (req, res) => {
+    try {
+        const {email,newPassword,answer} = req.body
+        if(!email || !newPassword || !answer){
+            return res.status(500).send({
+                success:false,
+                message:'Please Provide All Fields'
+            })
+        }
+        const user = await User.findOne({email,answer})
+        if(!user){
+            return res.status(500).send({
+                success:false,
+                message:'User Not Found or invalid Answer'
+            })
+        }
+        //hashing Password
+        var salt = bcrypt.genSaltSync(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        user.password = hashedPassword
+        await user.save();
+        res.status(200).send({
+            success: true,
+            message: "Password Reset Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in Password Reset API',
+            error: error.message
+        });
+    }
+}
 
 
-module.exports = { getAllUsersController, getUserByIdController, updateUserController, deleteUserController };
+
+module.exports = { getAllUsersController, getUserByIdController, updateUserController, deleteUserController, resetPasswordController };
