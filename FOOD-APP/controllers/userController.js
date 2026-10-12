@@ -99,6 +99,20 @@ const resetPasswordController = async (req, res) => {
     }
 }
 
+const updatePasswordController = async(req, res) => {
+    try{
+
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error In Password Update API',
+            error
+        })
+    }
+};
 
 
-module.exports = { getAllUsersController, getUserByIdController, updateUserController, deleteUserController, resetPasswordController };
+
+
+module.exports = { getAllUsersController, getUserByIdController, updateUserController, deleteUserController, resetPasswordController, updatePasswordController };
