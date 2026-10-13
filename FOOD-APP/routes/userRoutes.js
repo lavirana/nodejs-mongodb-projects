@@ -23,6 +23,6 @@ router.post('/resetPassword', authMiddleware, resetPasswordController);
 
 
 //password update
-router.post('./updatePassword', authMiddleware, updatePasswordController);
+router.post('/updatePassword', authMiddleware, updatePasswordController);
 
 module.exports = router;
