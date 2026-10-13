@@ -58,7 +58,10 @@ const updateUserController = async (req, res) => {
 const deleteUserController = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
-        res.status(200).json(user);
+        res.status(200).send({
+            success:true,
+            message: "Your account has been deleted",
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

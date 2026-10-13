@@ -14,9 +14,6 @@ router.get('/getUserById', authMiddleware, getUserByIdController);
 //UPDATE USER || PUT
 router.put('/updateUser', authMiddleware, updateUserController);
 
-//DELETE USER || DELETE
-router.delete('/deleteUser', deleteUserController);
-
 
 //RERSET PASSWORD
 router.post('/resetPassword', authMiddleware, resetPasswordController);
@@ -24,5 +21,8 @@ router.post('/resetPassword', authMiddleware, resetPasswordController);
 
 //password update
 router.post('/updatePassword', authMiddleware, updatePasswordController);
+
+//Delete Router
+router.delete('/deleteUser/:id', authMiddleware, deleteUserController)
 
 module.exports = router;
