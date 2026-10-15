@@ -50,4 +50,27 @@ const createResturantController = async (req, res) => {
     }
 }
 
-module.exports = { createResturantController };
+const getAllResturants = async (req, res) => {
+    try{
+        const resturants =  await resturantModel.find({});
+        if(!resturants){
+            return res.status(404).send({
+                success:false,
+                message:'No Resturant Available'
+            })
+        }
+        res.status(200).send({
+            success:true,
+            totalCount:resturants.length,
+            resturants
+    });
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:'Error To Get All Resturants'
+        })
+    }
+}
+
+module.exports = { createResturantController, getAllResturants };
