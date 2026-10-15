@@ -33,7 +33,7 @@ const resturantSchema = new mongoose.Schema({
         type:Number,
         default:1,
         min:1,
-        max:2
+        max:5
     },
     ratingCount:{type:String},
     code: {
