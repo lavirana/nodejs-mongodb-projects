@@ -102,4 +102,74 @@ const getFoodByIdController = async (req, res) => {
     }
 }
 
-module.exports = { createFoodController, getAllFoodController, getFoodByIdController }
+
+const updateFoodController = async (req, res) => {
+    try{
+        const {foodId} = req.params
+        const {title, 
+            description, 
+            price, 
+            imageUrl, 
+            foodTags, 
+            category, 
+            code, 
+            isAailable, 
+            resturant, 
+            rating} = req.body
+        const updateFood = await foodModel.findByIdAndUpdate(id, {   
+            title, 
+            description, 
+            price, 
+            imageUrl, 
+            foodTags, 
+            category, 
+            code, 
+            isAailable, 
+            resturant, 
+            rating 
+        }, {new:true})
+        if(!updateFood){
+            return res.status(500).send({
+                success:false,
+                message:'No Food Found'
+            });
+        }
+        res.status(200).send({
+            success: true,
+            message: "Food Updated Successfully"
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message:'Error To Update Food',
+            error
+        })
+    }
+}
+
+const deleteFoodController = async (req, res) => {
+    try{
+        const foodId = req.params.id;
+        if(!foodId){
+            return res.status(404).send({
+                success:false,
+                message:'Please Provide Food Id',
+            })
+        }
+        const FoodModel = await foodModel.findByIdAndDelete(foodId);
+        res.status(200).send({
+            success:true,
+            message: "Food has been deleted",
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message:'Error To Delete Food',
+            error
+        })
+    }
+}
+
+module.exports = { createFoodController, getAllFoodController, getFoodByIdController, updateFoodController, deleteFoodController }
