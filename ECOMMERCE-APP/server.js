@@ -2,10 +2,13 @@ import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
+//dot env config
+dotenv.config();
 
 //PORT
-const PORT = 9090;
+const PORT = process.env.PORT || 9090;
 
 //rest object
 const app = express();
@@ -22,5 +25,5 @@ app.get('/test',(req, res) => {
 
 //listen    
 app.listen(PORT, () => {
-    console.log('Server Running Yo'.bgGreen.bgYellow);
+    console.log(`Server Running on PORT ${process.env.PORT}`.bgGreen.bgYellow);
 });
