@@ -3,9 +3,15 @@ import colors from 'colors';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { connect } from 'mongoose';
+import connectDB from './config/db.js';
 
 //dot env config
 dotenv.config();
+
+
+//database connection
+connectDB();
 
 //PORT
 const PORT = process.env.PORT || 9090;
