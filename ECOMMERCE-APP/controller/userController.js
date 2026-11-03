@@ -3,7 +3,7 @@ export const registerController = async (
     req, res
 ) => {
     try {
-        const {name, email, password, address, city, country} = req.body
+        const {name, email, password, address, city, country, phone} = req.body
         //validation
         if(!name || !email || !password || !city || !address || !country){
             return res.status(500).send({
@@ -11,7 +11,15 @@ export const registerController = async (
                 message: 'Please Provide All Fields'
             });
         }
-        const user = await userModel.create({name, email, password, address, city, country});
+        //check existing user
+        const exisitingUser = await userModel.findOne({email});
+        if(exisitingUser){
+            return res.status(500).send({
+                success: false,
+                message: "Email already taken"
+            });
+        }
+        const user = await userModel.create({name, email, password, address, city, country, phone});
         res.status(201).send({
             success:true,
             message: 'Registration Success, Please login',
@@ -26,3 +34,47 @@ export const registerController = async (
         })
     }
 };
+
+
+//Login
+export const loginController = async (req, res) => {
+    try{
+    const {email, password} = req.body
+    //Validation
+        if(!email || !password){
+            return res.status(500).send({
+                success:false,
+                message:'Please Add Email or Password'
+            });
+        }
+        //check user
+        const user = await userModel.findOne({email});
+        if(!user){
+            return res.status(404).send({
+                success: false,
+                message: 'User Not Found'
+            });
+        }
+        //check password
+        const isMatch = await user.comparePassword(password)
+        if(!isMatch){
+            return res.status(500).send({
+                success: false,
+                message: 'Invalid Credentials'
+            });
+        }
+        res.status(200).send({
+            success:true,
+            message:'Login Successfully',
+            user
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error In Login API',
+            error
+        })
+
+    }
+}
