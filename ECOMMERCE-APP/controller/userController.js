@@ -63,9 +63,12 @@ export const loginController = async (req, res) => {
                 message: 'Invalid Credentials'
             });
         }
+        //token
+        const token = user.generateToken();
         res.status(200).send({
             success:true,
             message:'Login Successfully',
+            token,
             user
         });
     }catch(error){
@@ -78,3 +81,29 @@ export const loginController = async (req, res) => {
 
     }
 }
+
+//GET USER PROFILE
+export const getUserProfileController = async (req, res) => {
+    try{
+        const user = req.user;
+        user.password = undefined;
+        if(!user){
+            return res.status(404).send({
+                success: false,
+                message: 'User Not Found'
+            });
+        }
+        res.status(200).send({
+            success:true,
+            message:'User Profile Fetched Successfully',
+            user
+        })
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error In Profile API',
+            error
+        })
+    }
+};
