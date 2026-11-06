@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserProfileController, loginController, logoutController, registerController, updateProfileController } from '../controller/userController.js';
+import { getUserProfileController, loginController, logoutController, registerController, updatePasswordController, updateProfileController } from '../controller/userController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 //router object
@@ -20,6 +20,9 @@ router.get('/logout', authMiddleware , logoutController);
 
 //update profile
 router.put('/profile-update', authMiddleware, updateProfileController);
+
+//update password
+router.put('/password-update', authMiddleware, updatePasswordController);
 
 //export
 export default router;
