@@ -107,3 +107,61 @@ export const getUserProfileController = async (req, res) => {
         })
     }
 };
+
+//LOGOUT
+export const logoutController = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(404).send({
+                success: false,
+                message: 'User Not Found'
+            })
+        }
+
+        res.status(200).send({
+            success: true,
+            message: 'Logout Successfully'
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Error In Logout API',
+            error: error.message
+        })
+    }
+}
+
+export const updateProfileController = async (req, res) => {
+    try{
+        const user = await userModel.findById(req.user._id);
+        if(!user){
+            return res.status(404).send({
+                success: false,
+                message: 'User Not Found'
+            });
+        }
+        const {name, email, address, city, country, phone} = req.body;
+       if(name) user.name = name;
+       if(email) user.email = email;
+       if(address) user.address = address;
+       if(city) user.city = city;
+       if(country) user.country = country;
+       if(phone) user.phone = phone;
+    
+        //save user
+        await user.save();
+        res.status(200).send({
+            success: true,
+            message: 'Profile Updated Successfully',
+            user
+        });
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Error In Update Profile API',
+            error: error.message
+        });
+    }
+}
