@@ -1,4 +1,7 @@
 import { userModel } from '../models/userModel.js'
+import cloudinary from 'cloudinary';
+import { dataUri } from '../utils/Features.js';
+
 export const registerController = async (
     req, res
 ) => {
@@ -208,4 +211,37 @@ export const updatePasswordController = async (req, res) => {
             error: error.message
         });
     }
+}
+
+//UPLOAD PROFILE PICTURE
+export const uploadProfilePictureController = async (req, res) => {
+    try{
+        const user = await userModel.findById(req.user._id)
+        //get file from client photo
+        const file = dataUri(req.file)
+        //delete old profile image
+        if (user.profilePic?.public_id) {
+            await cloudinary.v2.uploader.destroy(user.profilePic.public_id)
+        }
+        // update
+
+        const cdb = await cloudinary.v2.uploader.upload(file.content)
+        user.profilePic = {
+            public_id: cdb.public_id,
+            url:cdb.secure_url
+        }
+        //save function
+        await user.save()
+        res.status(200).send({
+            success:true,
+            message:'profile picture updated',
+        })
+    }catch(error){
+    console.log(error);
+    res.status(500).send({
+        success: false,
+        message: 'Error In Upload Profile Picture API',
+        error: error.message
+    });
+}
 }

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { connect } from 'mongoose';
 import connectDB from './config/db.js';
 import userRoutes  from "./routes/userRoutes.js"
+import cloudinary from 'cloudinary';
 
 //dot env config
 dotenv.config();
@@ -13,6 +14,13 @@ dotenv.config();
 
 //database connection
 connectDB();
+
+//cloudinary connection
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 //PORT
 const PORT = process.env.PORT || 9090;

@@ -1,6 +1,7 @@
 import express from 'express';
-import { getUserProfileController, loginController, logoutController, registerController, updatePasswordController, updateProfileController } from '../controller/userController.js';
+import { getUserProfileController, loginController, logoutController, registerController, updatePasswordController, updateProfileController, uploadProfilePictureController } from '../controller/userController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
+import upload from '../middlewares/multer.js';
 
 //router object
 const router = express.Router()
@@ -23,6 +24,9 @@ router.put('/profile-update', authMiddleware, updateProfileController);
 
 //update password
 router.put('/password-update', authMiddleware, updatePasswordController);
+
+//upload profile picture
+router.put('/upload-profile-picture',authMiddleware, upload.single('file'), uploadProfilePictureController);
 
 //export
 export default router;
