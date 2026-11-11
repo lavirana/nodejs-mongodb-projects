@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { connect } from 'mongoose';
 import connectDB from './config/db.js';
 import userRoutes  from "./routes/userRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
 import cloudinary from 'cloudinary';
 
 //dot env config
@@ -33,6 +34,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/product", productRoutes);
 
 //Route
 app.get('/test',(req, res) => {
