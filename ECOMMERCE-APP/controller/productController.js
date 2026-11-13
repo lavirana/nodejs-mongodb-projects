@@ -96,3 +96,45 @@ export const createProductController = async (req, res) => {
         })
     }
 };
+
+//update product
+export const updateProductController = async (req, res) => {
+    try {
+    //find produuct
+        const product = await productModel.findById(req.params.id)
+        //validation
+        if(!product){
+            return res.status(404).send({
+                success: false,
+                message: 'Product not found'
+            });
+        }
+        const {name, description, price, stock, category} = req.body
+        // validation and update
+        if(name) product.name = name
+        if(description) product.description = description
+        if(price) product.price = price
+        if(stock) product.stock = stock
+        if(category) product.category = category
+
+        await product.save()
+        res.status(200).send({
+            success: true,
+            message: "Product destails updated",
+        })
+    }catch(error){
+        console.log(error);
+        //cast error || object id
+        if(error.name === "CastError"){
+            return res.status(500).send({
+                success: false,
+                message: "Invalid Id",
+            });
+        }
+        res.status(500).send({
+            success:false,
+            message:'Error in Update Product API',
+            error
+        })
+    }
+}
