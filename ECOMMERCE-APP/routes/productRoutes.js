@@ -1,6 +1,8 @@
 import express from 'express';
-import { createProductController, getAllProductsController, getSingleProduuctController } from '../controller/productController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
+import upload from '../middlewares/multer.js'
+import { createProductController, getAllProductsController, getSingleProduuctController } from '../controller/productController.js';
+
 
 const router = express.Router();
 
@@ -12,6 +14,6 @@ router.get('/get-all', getAllProductsController);
 router.get('/:id', getSingleProduuctController);
 
 //CREATE PRODUUCT
-router.post('/create', authMiddleware, createProductController)
+router.post('/create', authMiddleware, upload.single('file'),  createProductController)
 
 export default router

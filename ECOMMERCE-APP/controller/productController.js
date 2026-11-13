@@ -58,7 +58,7 @@ export const getSingleProduuctController = async (req, res) => {
 //create product
 export const createProductController = async (req, res) => {
     try{
-    const {name,description,price,category,stock} = req.body
+    const { name, description, price, category, stock} = req.body
     //validation
     if(!name || !description || !price || !stock){
         return res.status(500).send({
@@ -82,6 +82,10 @@ export const createProductController = async (req, res) => {
         name, description, price, category, stock, images:[image]
     })
 
+    res.status(201).send({
+        success:true,
+        message: 'Product Created Successfully',
+    })
     
     }catch(error){
         console.log(error);
