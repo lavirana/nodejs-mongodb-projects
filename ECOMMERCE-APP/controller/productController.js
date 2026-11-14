@@ -255,7 +255,15 @@ export const deleteProductController = async (req, res) => {
                 message: "Product Not Found",
             });
         }
-
+        //find and delete image clouudinary
+        for(let index=0; index< product.images.length; index++){
+            await cloudinary.v2.uploader.destroy(product.images[index].public_id)
+        }
+        await product.deleteOne();
+        res.status(200).send({
+            success:true,
+            message:'Product Deleted Successfully'
+        })
     }catch(error){
         console.log(error);
         //cast error || object id
