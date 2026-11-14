@@ -221,6 +221,41 @@ export const deleteProductImageController = async (req, res) => {
         //DELETE PRODUUCT IMAGE
         await cloudinary.v2.uploader.destroy(product.images[isExit].public_id)
         product.image.splice(isExist, 1);
+        await product.save();
+        return res.status(200).send({
+            success: true,
+            message: 'Product Image Deleted Successfully'
+        })
+    }catch(error){
+        console.log(error);
+        //cast error || object id
+        if(error.name === "CastError"){
+            return res.status(500).send({
+                success: false,
+                message: "Invalid Id",
+            });
+        }
+        res.status(500).send({
+            success:false,
+            message:'Error in Delete Product IMAGE API',
+            error
+        })
+    }
+}
+
+//DELETE PRODUCT
+export const deleteProductController = async (req, res) => {
+    try{
+        //find product 
+        const product = await productModel.findById(req.params.id);
+        //validation
+        if(!product){
+            return res.status(404).send({
+                success: false,
+                message: "Product Not Found",
+            });
+        }
+
     }catch(error){
         console.log(error);
         //cast error || object id

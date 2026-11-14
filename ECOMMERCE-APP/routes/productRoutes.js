@@ -1,7 +1,7 @@
 import express from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multer.js'
-import { createProductController, deleteProductImageController, getAllProductsController,
+import { createProductController, deleteProductController, deleteProductImageController, getAllProductsController,
      getSingleProduuctController, updateProductController, UpdateProductImageController } from '../controller/productController.js';
 
 
@@ -14,17 +14,20 @@ router.get('/get-all', getAllProductsController);
 //GET SINGLE PRODUCT
 router.get('/:id', getSingleProduuctController);
 
-//CREATE PRODUUCT
+//CREATE PRODUCT
 router.post('/create', authMiddleware, upload.single('file'),  createProductController);
 
-//UPDATE PRODUCR
+//UPDATE PRODUCT
 router.put('/:id', authMiddleware, updateProductController);
 
 //update product image
 router.put('/image/:id', authMiddleware, upload.single('file'), UpdateProductImageController);
 
 //delete product image
-router.delete('/delete-image/:id', authMiddleware, deleteProductImageController)
+router.delete('/delete-image/:id', authMiddleware, deleteProductImageController);
+
+//delete product
+router.delete("/delete/:id", authMiddleware, deleteProductController);
 
 
 export default router
