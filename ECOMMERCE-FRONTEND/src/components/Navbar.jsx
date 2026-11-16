@@ -14,6 +14,7 @@ export default function Navbar() {
         <nav style={{ display: 'flex', alignItems: 'center', gap: 15, padding: '10px 20px', borderBottom: '1px solid #ddd' }}>
             <Link to="/"><b>ECOMMERCE APP</b></Link>
             <Link to="/">Home</Link>
+            <Link to="/admin/categories">Categories</Link>
 
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 15, alignItems: 'center' }}>
                 {user ? (

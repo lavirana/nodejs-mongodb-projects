@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProductDetails from './pages/ProductDetails'
+import Categories from './pages/admin/Categories'
 
 export default function App() {
     return (
@@ -20,6 +21,10 @@ export default function App() {
                 element={<ProtectedRoute><Profile /></ProtectedRoute>}
             />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route
+    path="/admin/categories"
+    element={<ProtectedRoute><Categories /></ProtectedRoute>}
+/>
         </Routes>
       </>
     )

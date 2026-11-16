@@ -1,6 +1,6 @@
 import productModel from "../models/productModel.js";
 import cloudinary from 'cloudinary';
-import { dataUri } from './../utils/features.js';
+import { dataUri } from '../utils/features.js';
 
 
 //GET All Products
