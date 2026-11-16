@@ -7,6 +7,7 @@ import { connect } from 'mongoose';
 import connectDB from './config/db.js';
 import userRoutes  from "./routes/userRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
+import categoryRoutes from "./routes/categoryRoutes.js"
 import cloudinary from 'cloudinary';
 
 //dot env config
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/cat", categoryRoutes);
 
 //Route
 app.get('/test',(req, res) => {
