@@ -1,4 +1,3 @@
-import cors from 'cors'
 import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
