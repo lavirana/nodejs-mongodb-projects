@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel')
-const adminMiddleware = (req, res, next) => {
+const adminMiddleware = async (req, res, next) => {
     try{
     const user = await userModel.findById(req.body.id)
     if(user.usertype !== "admin"){

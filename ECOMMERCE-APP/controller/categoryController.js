@@ -79,3 +79,34 @@ export const  deleteCategoriesController = async (req, res) => {
         })
     }
 }
+
+export const updateCategoryController = async (req, res) => {
+    try{
+        //find category
+        const category = await categoryModel.findById(req.params.id);
+        //validation
+        if(!category){
+            return res.status(404).send({
+                success: false,
+                message: 'Category Not Found'
+            });
+        }
+        //get new cat name
+        const {UpdatedCategory} = req.body;
+        //find product with category id
+        const products = await productModel.find({category: category._id});
+        //update product category
+        for(let i=0; i<products.length; i++){
+            const product  = products[i];
+            product.category = UpdatedCategory;
+            await product.save();
+        }
+        //save
+        await category.save();
+    }catch(error){
+        res.status(500).send({
+            success: false,
+            message: 'Error in update category'
+        })
+    }
+}

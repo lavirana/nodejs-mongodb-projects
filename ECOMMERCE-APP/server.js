@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
@@ -37,6 +38,8 @@ app.use(cors());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/cat", categoryRoutes);
+app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(express.json())
 
 //Route
 app.get('/test',(req, res) => {

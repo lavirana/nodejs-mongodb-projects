@@ -1,7 +1,7 @@
 import express from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multer.js';
-import { createCategory, deleteCategoriesController, getAllCategoriesController } from '../controller/categoryController.js';
+import { createCategory, deleteCategoriesController, getAllCategoriesController, updateCategoryController } from '../controller/categoryController.js';
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ router.get('/get-all', authMiddleware, getAllCategoriesController);
 router.post('/create', authMiddleware, createCategory);
 
 //Update Category
+router.put('/update/:id',authMiddleware, updateCategoryController);
 
 //Delete Category
 router.delete("/delete/:id", authMiddleware, deleteCategoriesController);

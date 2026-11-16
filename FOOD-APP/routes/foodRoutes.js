@@ -26,6 +26,6 @@ router.put('/delete/:id', authMiddleware, deleteFoodController)
 router.post('/placeorder',authMiddleware, placeOrderController)
 
 //ORDER STATUS
-router.post('/orderStatus/:id', adminMiddleware, orderStatusController)
+router.post('/orderStatus/:id', authMiddleware, adminMiddleware, orderStatusController)
 
 module.exports = router;
