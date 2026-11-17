@@ -10,6 +10,7 @@ import productRoutes from "./routes/productRoutes.js"
 import categoryRoutes from "./routes/categoryRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
 import cloudinary from 'cloudinary';
+import stripe from 'stripe'
 
 //dot env config
 dotenv.config();
@@ -17,6 +18,9 @@ dotenv.config();
 
 //database connection
 connectDB();
+
+//stripe configuration
+const stripe = new Stripe(process.env.STRIPE_API_SECRET)
 
 //cloudinary connection
 cloudinary.v2.config({

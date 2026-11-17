@@ -127,3 +127,6 @@ export const singleOrderDetailControllers = async (req, res) => {
         })
     }
 }
+
+//get Single order INFO
+export const paymentControllers = async (req, res) => {}
