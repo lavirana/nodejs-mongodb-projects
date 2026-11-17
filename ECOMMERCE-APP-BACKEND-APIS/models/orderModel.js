@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema({
                 required:[true, 'Product quantity is required']
             },
             image:{
-                type:Number,
+                type:String,
                 required:[true, 'Product image is required']
             },
             product:{
@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema({
     paymentMethod:{
         type:String,
         enum:["COD","ONLINE"],
-        default:"CODE"
+        default:"COD"
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
