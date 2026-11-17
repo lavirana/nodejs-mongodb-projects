@@ -1,5 +1,7 @@
+
 import orderModel from '../models/orderModel.js'
 import productModel from '../models/productModel.js'
+import { stripe } from '../config/stripe.js'
 
 export const createOrderController = async (req, res) => {
     try {
@@ -129,4 +131,32 @@ export const singleOrderDetailControllers = async (req, res) => {
 }
 
 //get Single order INFO
-export const paymentControllers = async (req, res) => {}
+export const paymentControllers = async (req, res) => {
+    try {
+        const { totalAmount } = req.body
+
+        if (!totalAmount) {
+            return res.status(400).send({
+                success: false,
+                message: 'Total Amount is required',
+            })
+        }
+
+        const { client_secret } = await stripe.paymentIntents.create({
+            amount: Math.round(Number(totalAmount) * 100),   // cents me
+            currency: 'usd',
+        })
+
+        res.status(200).send({
+            success: true,
+            client_secret,
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Error in Payment API',
+            error: error.message,   // asli reason dikhega
+        })
+    }
+}
