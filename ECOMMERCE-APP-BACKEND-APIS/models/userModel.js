@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
         public_id : String,
         url : String
     },
+    answer: {
+        type: String,
+        required: [true, "answer is required"]
+    },
     role: {
         type: String,
         default: "user",

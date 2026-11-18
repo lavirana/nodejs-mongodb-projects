@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserProfileController, loginController, logoutController, registerController, updatePasswordController, updateProfileController, uploadProfilePictureController } from '../controller/userController.js';
+import { getUserProfileController, loginController, logoutController, passwordResetController, registerController, updatePasswordController, updateProfileController, uploadProfilePictureController } from '../controller/userController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multer.js';
 
@@ -27,6 +27,9 @@ router.put('/password-update', authMiddleware, updatePasswordController);
 
 //upload profile picture
 router.put('/upload-profile-picture',authMiddleware, upload.single('file'), uploadProfilePictureController);
+
+//Forgot Password
+router.post("/reset-password", passwordResetController)
 
 //export
 export default router;

@@ -6,9 +6,9 @@ export const registerController = async (
     req, res
 ) => {
     try {
-        const {name, email, password, address, city, country, phone} = req.body
+        const {name, email, password, address, city, country, phone, answer} = req.body
         //validation
-        if(!name || !email || !password || !city || !address || !country){
+        if(!name || !email || !password || !city || !address || !country || !answer){
             return res.status(500).send({
                 sucess: false,
                 message: 'Please Provide All Fields'
@@ -22,7 +22,7 @@ export const registerController = async (
                 message: "Email already taken"
             });
         }
-        const user = await userModel.create({name, email, password, address, city, country, phone});
+        const user = await userModel.create({name, email, password, address, city, country, phone, answer});
         res.status(201).send({
             success:true,
             message: 'Registration Success, Please login',
@@ -244,4 +244,40 @@ export const uploadProfilePictureController = async (req, res) => {
         error: error.message
     });
 }
+}
+
+export const passwordResetController = async (req, res) => {
+    try{
+        //user get email || newPassword || answer
+        const {email, newPassword} = req.body
+        //validation
+        if(!email || !newPassword || !answer){
+            return res.status(500).send({
+                success: false,
+                message: "Please provide All Fields"
+            })
+        }
+        //find user
+        const user = await userModel.findOne({email, answer})
+        //validation
+        if(!user){
+            return res.status(404).send({
+                success: false,
+                message: "Invalid user or answer"
+            })
+        }
+        user.password = newPassword;
+        await user.save();
+            return res.status(200).send({
+                success: true,
+                message: "User Password has been reset please login!"
+            })
+    }catch(error){
+    console.log(error);
+    res.status(500).send({
+        success: false,
+        message: 'Error In Password Reset API',
+        error: error.message
+    });
+    }
 }
