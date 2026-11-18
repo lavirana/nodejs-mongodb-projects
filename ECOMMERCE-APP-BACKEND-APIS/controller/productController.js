@@ -7,7 +7,12 @@ import { dataUri } from '../utils/features.js';
 export const getAllProductsController = async (req,res) => {
     const {keyword, category} = req.query
     try{
-        const products = await productModel.find({})
+        const products = await productModel.find({
+            name:{
+                $regex: keyword ? keyword : '',
+                $options : 'i',
+            },
+        })
         res.status(200).send({
             success:true,
             message:"All Product fetched successfully",
