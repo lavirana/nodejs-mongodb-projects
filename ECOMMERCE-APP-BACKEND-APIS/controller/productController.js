@@ -5,6 +5,7 @@ import { dataUri } from '../utils/features.js';
 
 //GET All Products
 export const getAllProductsController = async (req,res) => {
+    const {keyword, category} = req.query
     try{
         const products = await productModel.find({})
         res.status(200).send({
