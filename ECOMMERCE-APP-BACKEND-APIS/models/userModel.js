@@ -36,7 +36,11 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         public_id : String,
         url : String
-    }
+    },
+    role: {
+        type: String,
+        default: "user",
+    },
 },
 {timestamps:true});
 

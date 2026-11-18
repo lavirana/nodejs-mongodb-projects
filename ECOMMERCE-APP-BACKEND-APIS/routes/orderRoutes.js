@@ -1,7 +1,7 @@
 import express from 'express';
-import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { authMiddleware, isAdmin } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multer.js';
-import { createOrderController, getMyOrderControllers, paymentControllers, singleOrderDetailControllers } from '../controller/orderController.js';
+import { changeOrderStatusController, createOrderController, getAllOrdersController, getMyOrderControllers, paymentControllers, singleOrderDetailControllers } from '../controller/orderController.js';
 
 const router = express.Router();
 
@@ -17,4 +17,11 @@ router.get('/my-orders/:id', authMiddleware, singleOrderDetailControllers)
 //Accept payments
 router.post('/payments', authMiddleware, paymentControllers)
 
+
+//ADMIN PART
+//GET ALL ORDERS
+router.get('/admin/get-all-orders', authMiddleware, isAdmin, getAllOrdersController)
+
+//CHANGE ORDER STATUS
+router.put('/admin/order/:id', authMiddleware, isAdmin, changeOrderStatusController)
 export default router

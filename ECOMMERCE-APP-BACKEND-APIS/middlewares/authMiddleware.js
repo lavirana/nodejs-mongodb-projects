@@ -24,3 +24,15 @@ export const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
+
+//ADMIN AUTH
+
+export const isAdmin = async(req, res, next) => {
+    if(req.user.role !== 'admin'){
+        return res.status(401).send({
+            success:false,
+            message:"admin only"
+        });
+    }
+    next();
+}

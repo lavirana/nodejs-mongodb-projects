@@ -160,3 +160,68 @@ export const paymentControllers = async (req, res) => {
         })
     }
 }
+
+//ADMIN SECTION
+//GET ALL ORDER
+
+export const getAllOrdersController = async (req, res) => {
+    try{
+        const orders = await orderModel.find({})
+        res.status(200).send({
+            success: true,
+            message: 'All Orders Data',
+            totalOrders: orders.length,
+            orders
+        })
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Error in Payment API',
+            error: error.message,   // asli reason dikhega
+        })
+    }
+}
+
+//change order status
+export const changeOrderStatusController = async (req, res) => {
+    try{
+        //find order
+        const order = await orderModel.findById(req.params.id)
+        //validation
+        if(!order){
+            return res.status(404).send({
+                success: false,
+                message: 'Order not found'
+            })
+        }
+        if(order.orderStatus === "processing") order.orderStatus = "Shipped"
+        else if(order.orderStatus === "Shipped"){
+            order.orderStatus = "delivered"
+            order.deliveredAt = Date.now()
+        }else{
+            return res.status(500).send({
+                success: false,
+                message: "Order Already Delivered"
+            })
+        }
+        await order .save()
+        res.status(200).send({
+            success:true,
+            message: 'Order Status Updated'
+        })
+    }catch(error){
+        console.log(error)
+        if(error.name === "CastError"){
+            return res.status(500).send({
+                success: false,
+                message: "Invalid Id"
+            });
+        }
+        res.status(500).send({
+            success:false,
+            message:'Error in Get Update Order API',
+            error
+        })
+    }
+}
