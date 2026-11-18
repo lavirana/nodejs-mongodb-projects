@@ -2,7 +2,7 @@ import express from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multer.js'
 import { createProductController, deleteProductController, deleteProductImageController, getAllProductsController,
-     getSingleProduuctController, updateProductController, UpdateProductImageController } from '../controller/productController.js';
+     getSingleProduuctController, productReviewController, updateProductController, UpdateProductImageController } from '../controller/productController.js';
 
 
 const router = express.Router();
@@ -28,6 +28,9 @@ router.delete('/delete-image/:id', authMiddleware, deleteProductImageController)
 
 //delete product
 router.delete("/delete/:id", authMiddleware, deleteProductController);
+
+//Review product
+router.put('/:id/review', authMiddleware, productReviewController);
 
 
 export default router
