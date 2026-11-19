@@ -30,3 +30,10 @@ export default function App() {
     )
 }
 
+//<>...</>	Empty wrapper (React needs one parent).
+//<Navbar />	Always visible on top.
+//<Routes>	The list of pages.
+//<Route path element>  If URL is this path, show this page.
+///product/:id	:id is a changing part.
+//<ProtectedRoute>	Only logged-in users.
+

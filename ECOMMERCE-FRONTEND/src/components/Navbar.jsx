@@ -1,15 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-export default function Navbar() {
-    const { user, logout } = useAuth()
-    const navigate = useNavigate()
 
+export default function Navbar() {
+    const { user, logout } = useAuth()  //useAuth()	Get user and logout from the box.
+    const navigate = useNavigate() //useNavigate()	A function to change page by code.
+
+    //handleLogout	Clear login, then go to login page.
     const handleLogout = () => {
         logout()
         navigate('/login')
     }
 
+    //<Link to="/">	A link that does not reload the page.
+    //user ? (...) : (...)	If logged in show name and Logout, else Login and Register.
     return (
         <nav style={{ display: 'flex', alignItems: 'center', gap: 15, padding: '10px 20px', borderBottom: '1px solid #ddd' }}>
             <Link to="/"><b>ECOMMERCE APP</b></Link>

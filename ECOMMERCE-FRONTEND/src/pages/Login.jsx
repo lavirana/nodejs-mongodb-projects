@@ -53,3 +53,17 @@ export default function Login() {
         </form>
     )
 }
+
+
+//useState('')	Store what the user types.
+//loading	true while waiting for server.
+//async (e)	Function that can wait for the server.
+//e.preventDefault()	Stop the browser from reloading the page.
+//api.post('/user/login', {...})	Send email and password to the server.
+//await	Wait until the answer comes.
+//{ data }	The server’s JSON answer.
+//login(data.token, data.user)	Save token and user.
+//navigate('/')	Go to Home.
+//catch (error)	Runs if something fails/
+//error.response?.data?.message	The server’s error message. ?. means “if it exists”.
+//finally	Runs always, success or fail.
