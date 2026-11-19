@@ -49,3 +49,12 @@ export default function Home() {
         </div>
     )
 }
+
+//useState([])	Start with an empty list
+//useEffect(..., [])	Run once when the page opens.
+//api.get(...)	Ask the server for all products.
+//data.products || []	Use [] if nothing came.
+//products.map((p) => ...)	Make one card for each product.	
+//key={p._id}	A unique id so React tracks each card.
+//p.images?.[0]?.url	First image URL, safely.
+//<Link to={/product/${p._id}}>	Open that product’s detail page.
